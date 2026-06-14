@@ -25,9 +25,6 @@ from extensions import (
 )
 
 app = Flask(__name__)
-@app.route("/")
-def health():
-    return "InventoryGPT Backend Running"
 
 app.config.from_object(Config)
 
@@ -37,75 +34,76 @@ CORS(
 )
 
 
-db.init_app(app)
-migrate.init_app(app, db)
-jwt.init_app(app)
-mail.init_app(app)
+# db.init_app(app)
+# migrate.init_app(app, db)
+# jwt.init_app(app)
+# mail.init_app(app)
 
 #app.register_blueprint(
-   product_bp,
-    url_prefix="/api/products"
-)
+#    product_bp,
+#    url_prefix="/api/products"
+#)
 
-app.register_blueprint(
-    dashboard_bp,
-    url_prefix="/api/dashboard"
-)
+#app.register_blueprint(
+#    dashboard_bp,
+#    url_prefix="/api/dashboard"
+#)
 
-app.register_blueprint(
-    analytics_bp,
-    url_prefix="/api/analytics"
-)
+#app.register_blueprint(
+#    analytics_bp,
+#    url_prefix="/api/analytics"
+#)
 
-app.register_blueprint(
-    supplier_bp,
-    url_prefix="/api/suppliers"
-)
+#app.register_blueprint(
+#    supplier_bp,
+#    url_prefix="/api/suppliers"
+#)
 
-app.register_blueprint(
-    sales_order_bp,
-    url_prefix="/api/sales-orders"
-)
+#app.register_blueprint(
+#    sales_order_bp,
+#    url_prefix="/api/sales-orders"
+#)
 
-app.register_blueprint(
-    customer_bp,
-    url_prefix="/api/customers"
-)
+#app.register_blueprint(
+#    customer_bp,
+#    url_prefix="/api/customers"
+#)
 
-app.register_blueprint(
-    low_stock_bp,
-    url_prefix="/api/low-stock"
-)
+#app.register_blueprint(
+#    low_stock_bp,
+#    url_prefix="/api/low-stock"
+#)
 
-app.register_blueprint(
-    transaction_bp,
-    url_prefix="/api/transactions"
-)
+#app.register_blueprint(
+#    transaction_bp,
+#    url_prefix="/api/transactions"
+#)
 
 #app.register_blueprint(
 #    ai_inventory_bp,
 #    url_prefix="/api/ai-inventory"
 #)
 
-app.register_blueprint(
-    purchase_order_bp,
-    url_prefix="/api/purchase-orders"
-)
+#app.register_blueprint(
+#    purchase_order_bp,
+#    url_prefix="/api/purchase-orders"
+#)
 
-app.register_blueprint(
-    auth_bp,
-    url_prefix="/api/auth"
-)
-app.register_blueprint(
-    inventory_bp,
-    url_prefix="/api/inventory"
-)
+#app.register_blueprint(
+#    auth_bp,
+#    url_prefix="/api/auth"
+#)
+
+#app.register_blueprint(
+#    inventory_bp,
+#    url_prefix="/api/inventory"
+#)
 
 @app.route("/")
 def home():
     return {
         "status": "running",
-        "service": "InventoryGPT"
+        #"service": "InventoryGPT"
     }
 
 if __name__ == "__main__":
