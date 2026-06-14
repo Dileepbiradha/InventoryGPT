@@ -25,6 +25,9 @@ from extensions import (
 )
 
 app = Flask(__name__)
+@app.route("/")
+def health():
+    return "InventoryGPT Backend Running"
 
 app.config.from_object(Config)
 
@@ -39,8 +42,8 @@ migrate.init_app(app, db)
 jwt.init_app(app)
 mail.init_app(app)
 
-app.register_blueprint(
-    product_bp,
+#app.register_blueprint(
+   product_bp,
     url_prefix="/api/products"
 )
 
