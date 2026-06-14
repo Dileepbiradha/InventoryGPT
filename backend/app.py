@@ -7,7 +7,7 @@ from routes.supplier_routes import supplier_bp
 from routes.sales_order_routes import sales_order_bp
 from routes.customer_routes import customer_bp
 from routes.low_stock_routes import low_stock_bp
-from routes.ai_inventory_routes import ai_inventory_bp
+#from routes.ai_inventory_routes import ai_inventory_bp
 from routes.transaction_routes import transaction_bp
 from routes.purchase_order_routes import purchase_order_bp
 from routes.auth_routes import auth_bp
@@ -25,6 +25,12 @@ from extensions import (
 )
 
 app = Flask(__name__)
+@app.route("/")
+def home():
+    return {
+        "status": "running",
+        "service": "InventoryGPT"
+    }
 app.config.from_object(Config)
 
 CORS(
@@ -78,10 +84,10 @@ app.register_blueprint(
     url_prefix="/api/transactions"
 )
 
-app.register_blueprint(
-    ai_inventory_bp,
-    url_prefix="/api/ai-inventory"
-)
+#app.register_blueprint(
+#    ai_inventory_bp,
+#    url_prefix="/api/ai-inventory"
+#)
 
 app.register_blueprint(
     purchase_order_bp,
@@ -96,6 +102,13 @@ app.register_blueprint(
     inventory_bp,
     url_prefix="/api/inventory"
 )
+
+@app.route("/")
+def home():
+    return {
+        "status": "running",
+        "service": "InventoryGPT"
+    }
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
