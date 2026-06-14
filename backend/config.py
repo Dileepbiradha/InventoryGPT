@@ -29,5 +29,3 @@ class Config:
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=24)
 
 
-print("GEMINI_API_KEY =", Config.GEMINI_API_KEY)
-print("KEY STARTS WITH =", Config.GEMINI_API_KEY[:6] if Config.GEMINI_API_KEY else "None")
