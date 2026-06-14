@@ -25,12 +25,7 @@ from extensions import (
 )
 
 app = Flask(__name__)
-@app.route("/")
-def home():
-    return {
-        "status": "running",
-        "service": "InventoryGPT"
-    }
+
 app.config.from_object(Config)
 
 CORS(
