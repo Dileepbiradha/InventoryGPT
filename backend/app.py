@@ -25,6 +25,11 @@ from extensions import (
 )
 
 app = Flask(__name__)
+@app.route("/")
+def home():
+    return "HELLO_FROM_RAILWAY"
+
+print("========== INVENTORYGPT STARTED ==========")
 
 app.config.from_object(Config)
 
@@ -99,12 +104,7 @@ CORS(
 #    url_prefix="/api/inventory"
 #)
 
-@app.route("/")
-def home():
-    return {
-        "status": "running",
-        #"service": "InventoryGPT"
-    }
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
