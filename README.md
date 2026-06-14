@@ -145,17 +145,28 @@ JWT_SECRET_KEY=your_secret_key
 
 ---
 
+
 ## Screenshots
 
-Dashboard
+### Dashboard
 
-Products
+![Dashboard](screenshots/dashboard.png)
 
-Inventory Management
+### Products
 
-Purchase Orders
+![Products](screenshots/products.png)
 
-AI Assistant
+### Inventory Management
+
+![Inventory](screenshots/inventory.png)
+
+### Purchase Orders
+
+![Purchase Orders](screenshots/purchase-orders.png)
+
+### AI Assistant
+
+![AI Assistant](screenshots/ai-assistant.png)
 
 ---
 
