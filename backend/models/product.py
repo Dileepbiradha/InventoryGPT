@@ -36,6 +36,11 @@ class Product(db.Model):
         default=0
     )
 
+    minimum_stock = db.Column(
+    db.Integer,
+    default=20
+    )
+
     supplier = db.Column(
         db.String(255)
     )
@@ -53,6 +58,7 @@ class Product(db.Model):
             "category": self.category,
             "price": self.price,
             "quantity": self.quantity,
+            "minimum_stock": self.minimum_stock,
             "supplier": self.supplier,
             "created_at": self.created_at.isoformat()
         }

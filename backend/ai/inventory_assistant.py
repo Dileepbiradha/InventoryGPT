@@ -1,53 +1,27 @@
-import os
-
-import google.generativeai as genai
-
-from dotenv import load_dotenv
-
-from ai.rag_service import RAGService
-
-load_dotenv()
-
-genai.configure(
-    api_key=os.getenv("GEMINI_API_KEY")
-)
+from google import genai
+from config import Config
 
 
 class InventoryAssistant:
 
     @staticmethod
-    def answer(question):
-
-        inventory_context = (
-            RAGService.build_inventory_context()
-        )
-
-        prompt = f"""
-You are an Inventory Management Assistant.
-
-Inventory Data:
-
-{inventory_context}
-
-User Question:
-{question}
-
-Answer naturally and professionally.
-"""
+    def ask(prompt):
 
         try:
 
-            # Temporary mock AI response
-            if "laptop" in question.lower():
+            client = genai.Client(
+                api_key=Config.GEMINI_API_KEY
+            )
 
-                return (
-                    "There are currently 110 laptops in stock. "
-                    "The product belongs to the Electronics category "
-                    "and is supplied by Dell."
-                )
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt
+            )
 
-            return inventory_context
+            return response.text
 
         except Exception as e:
 
-            return f"Gemini Error: {str(e)}"
+            print("GEMINI ERROR:", str(e))
+
+            raise e
