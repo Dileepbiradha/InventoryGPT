@@ -7,7 +7,7 @@ from routes.supplier_routes import supplier_bp
 from routes.sales_order_routes import sales_order_bp
 from routes.customer_routes import customer_bp
 from routes.low_stock_routes import low_stock_bp
-from routes.ai_inventory_routes import ai_inventory_bp
+#from routes.ai_inventory_routes import ai_inventory_bp
 from routes.transaction_routes import transaction_bp
 from routes.purchase_order_routes import purchase_order_bp
 from routes.auth_routes import auth_bp
@@ -84,11 +84,6 @@ app.register_blueprint(
 app.register_blueprint(
     transaction_bp,
     url_prefix="/api/transactions"
-)
-
-app.register_blueprint(
-    ai_inventory_bp,
-    url_prefix="/api/ai-inventory"
 )
 
 app.register_blueprint(
