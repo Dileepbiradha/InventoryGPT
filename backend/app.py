@@ -46,6 +46,15 @@ migrate.init_app(app, db)
 jwt.init_app(app)
 mail.init_app(app)
 
+with app.app_context():
+    db.create_all()
+    
+@app.route("/")
+def home():
+    return {
+        "status": "running"
+    }
+
 app.register_blueprint(
     product_bp,
     url_prefix="/api/products"

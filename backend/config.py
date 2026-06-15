@@ -14,18 +14,13 @@ class Config:
         "sqlite:///" +
         os.path.join(
             BASE_DIR,
-            "instance",
             "inventory.db"
         )
     )
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    GEMINI_API_KEY = os.getenv(
-        "GEMINI_API_KEY"
-    )
+    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=24)
-
-
