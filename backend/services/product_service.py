@@ -30,6 +30,7 @@ class ProductService:
             category=data.get("category"),
             price=data["price"],
             quantity=data.get("quantity", 0),
+            minimum_stock=data.get("minimum_stock", 20),
             supplier=data.get("supplier")
         )
 
