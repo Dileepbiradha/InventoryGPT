@@ -9,12 +9,13 @@ genai.configure(
 
 def ask_gemini(question):
 
-    model = genai.GenerativeModel(
-        "gemini-2.0-flash"
-    )
+    available_models = []
 
-    response = model.generate_content(
-        question
-    )
+    for model in genai.list_models():
 
-    return response.text
+        available_models.append({
+            "name": model.name,
+            "methods": model.supported_generation_methods
+        })
+
+    return str(available_models)
