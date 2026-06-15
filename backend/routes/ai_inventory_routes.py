@@ -16,13 +16,11 @@ ai_inventory_bp = Blueprint(
 )
 def ask_inventory_ai():
 
-    # TEST GET REQUEST
     if request.method == "GET":
         return jsonify({
             "status": "AI route working"
         })
 
-    # POST REQUEST
     data = request.get_json()
 
     if not data:
@@ -42,9 +40,7 @@ def ask_inventory_ai():
 
     try:
 
-        answer = ask_gemini(
-            question
-        )
+        answer = ask_gemini(question)
 
         return jsonify({
             "answer": answer

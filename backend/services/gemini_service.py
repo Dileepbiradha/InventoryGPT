@@ -6,16 +6,15 @@ genai.configure(
     api_key=Config.GEMINI_API_KEY
 )
 
+model = genai.GenerativeModel(
+    "models/gemini-1.5-flash"
+)
+
 
 def ask_gemini(question):
 
-    available_models = []
+    response = model.generate_content(
+        question
+    )
 
-    for model in genai.list_models():
-
-        available_models.append({
-            "name": model.name,
-            "methods": model.supported_generation_methods
-        })
-
-    return str(available_models)
+    return response.text
