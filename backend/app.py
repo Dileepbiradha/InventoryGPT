@@ -91,10 +91,6 @@ app.register_blueprint(
     url_prefix="/api/suppliers"
 )
 
-app.register_blueprint(
-    inventory_bp,
-    url_prefix="/api/inventory"
-)
 
 app.register_blueprint(
     sales_order_bp,
@@ -125,6 +121,12 @@ app.register_blueprint(
     auth_bp,
     url_prefix="/api/auth"
 )
+
+app.register_blueprint(
+    inventory_bp,
+    url_prefix="/api/inventory"
+)
+
 
 app.register_blueprint(
     ai_inventory_bp,
