@@ -23,14 +23,14 @@ def analytics():
     for order in approved_orders:
 
         product = Product.query.get(
-        order.product_id
-    )
-
-    if product:
-        total_revenue += (
-            product.price *
-            order.quantity
+            order.product_id
         )
+
+        if product:
+            total_revenue += (
+                product.price *
+                order.quantity
+            )
 
     products = Product.query.all()
     transactions = Transaction.query.all()
@@ -72,13 +72,9 @@ def analytics():
         )
 
         if product:
-
-            sales_map[product.name] = (
-                sales_map.get(
-                    product.name,
-                    0
-                )
-                + order.quantity
+            total_revenue += (
+                product.price *
+                order.quantity
             )
 
     for name, qty in sales_map.items():
