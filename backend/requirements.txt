@@ -19,6 +19,7 @@ typing_extensions==4.15.0
 Werkzeug==3.1.8
 gunicorn
 google-generativeai
+chromadb
 Flask-JWT-Extended
 Flask-Mail
 bcrypt
