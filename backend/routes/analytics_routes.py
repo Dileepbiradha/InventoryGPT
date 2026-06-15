@@ -11,7 +11,7 @@ analytics_bp = Blueprint(
 )
 
 
-@analytics_bp.route("", methods=["GET"])
+@analytics_bp.route("/", methods=["GET"])
 def analytics():
 
     approved_orders = SalesOrder.query.filter_by(

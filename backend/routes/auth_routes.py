@@ -39,3 +39,4 @@ def login():
     )
 
     return jsonify(result)
+
