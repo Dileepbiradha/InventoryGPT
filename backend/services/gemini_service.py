@@ -13,8 +13,10 @@ model = genai.GenerativeModel(
 
 def ask_gemini(question):
 
-    response = model.generate_content(
-        question
-    )
+    print("QUESTION:", question)
+
+    response = model.generate_content(question)
+
+    print("RESPONSE:", response.text)
 
     return response.text
