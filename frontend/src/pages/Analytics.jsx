@@ -24,30 +24,44 @@ ChartJS.register(
 );
 
 function Analytics() {
-
-  const [data, setData] =
-    useState(null);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     loadAnalytics();
   }, []);
 
   const loadAnalytics = async () => {
+    try {
+      const response = await api.get(
+        "/analytics/"
+      );
 
-    const response =
-      await api.get("/analytics");
+      console.log(response.data);
 
-    setData(response.data);
+      setData(response.data);
+    } catch (error) {
+      console.error(
+        "Analytics Error:",
+        error
+      );
+    }
   };
 
-  if (!data)
-    return <h2>Loading...</h2>;
+  if (!data) {
+    return (
+      <>
+        <Navbar />
+        <div style={{ padding: "30px" }}>
+          <h2>Loading...</h2>
+        </div>
+      </>
+    );
+  }
 
   const chartData = {
-
     labels:
       data.top_selling?.map(
-        item => item.name
+        (item) => item.name
       ) || [],
 
     datasets: [
@@ -56,7 +70,7 @@ function Analytics() {
 
         data:
           data.top_selling?.map(
-            item => item.quantity
+            (item) => item.quantity
           ) || [],
 
         backgroundColor:
@@ -70,7 +84,6 @@ function Analytics() {
       <Navbar />
 
       <div style={{ padding: "30px" }}>
-
         <h1>Analytics</h1>
 
         <div
@@ -82,45 +95,33 @@ function Analytics() {
             marginBottom: "40px"
           }}
         >
-
           <div className="card">
             <h3>Products</h3>
-            <h2>
-              {data.total_products}
-            </h2>
+            <h2>{data.total_products}</h2>
           </div>
 
           <div className="card">
             <h3>Transactions</h3>
-            <h2>
-              {data.transaction_count}
-            </h2>
+            <h2>{data.transaction_count}</h2>
           </div>
 
           <div className="card">
             <h3>Low Stock</h3>
-            <h2>
-              {data.low_stock_count}
-            </h2>
+            <h2>{data.low_stock_count}</h2>
           </div>
 
           <div className="card">
             <h3>Inventory Value</h3>
-            <h2>
-              ₹{data.inventory_value}
-            </h2>
+            <h2>₹{data.inventory_value}</h2>
           </div>
 
           <div className="card">
             <h3>Total Revenue</h3>
             <h2>₹{data.total_revenue}</h2>
           </div>
-
         </div>
 
-        <h2>
-          Top Stock Product
-        </h2>
+        <h2>Top Stock Product</h2>
 
         <div
           style={{
@@ -147,19 +148,18 @@ function Analytics() {
           </p>
         </div>
 
-<h2 style={{ marginTop: "50px" }}>
-  Top Selling Products
-</h2>
+        <h2 style={{ marginTop: "50px" }}>
+          Top Selling Products
+        </h2>
 
-<div
-  style={{
-    width: "700px",
-    marginTop: "20px"
-  }}
->
-  <Bar data={chartData} />
-</div>
-
+        <div
+          style={{
+            width: "700px",
+            marginTop: "20px"
+          }}
+        >
+          <Bar data={chartData} />
+        </div>
       </div>
     </>
   );

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../services/api";
 import Navbar from "../components/Navbar";
 
 import {
@@ -46,35 +45,47 @@ function Dashboard() {
 
   const loadDashboard = async () => {
     try {
-      const response = await api.get("/dashboard");
-      setData(response.data);
+      const response = await fetch(
+        "https://inventorygpt.onrender.com/api/dashboard/"
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to load dashboard");
+      }
+
+      const result = await response.json();
+
+      console.log("Dashboard:", result);
+
+      setData(result);
     } catch (error) {
       console.error("Dashboard Error:", error);
-
-      if (error.response?.status === 401) {
-        localStorage.clear();
-        navigate("/login");
-      }
     }
   };
 
   const loadAnalytics = async () => {
     try {
-      const response = await api.get("/analytics");
-      setAnalytics(response.data);
+      const response = await fetch(
+        "https://inventorygpt.onrender.com/api/analytics/"
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to load analytics");
+      }
+
+      const result = await response.json();
+
+      console.log("Analytics:", result);
+
+      setAnalytics(result);
     } catch (error) {
       console.error("Analytics Error:", error);
-
-      if (error.response?.status === 401) {
-        localStorage.clear();
-        navigate("/login");
-      }
     }
   };
 
   const downloadReport = () => {
     window.open(
-      "http://127.0.0.1:5000/api/reports/inventory",
+      "https://inventorygpt.onrender.com/api/reports/inventory",
       "_blank"
     );
   };
@@ -99,9 +110,7 @@ function Dashboard() {
   }
 
   const stockChartData = {
-    labels: data.products.map(
-      (product) => product.name
-    ),
+    labels: data.products.map((product) => product.name),
 
     datasets: [
       {
@@ -129,6 +138,7 @@ function Dashboard() {
           analytics.transaction_count,
           analytics.low_stock_count
         ],
+
         backgroundColor: [
           "#2563EB",
           "#10B981",
@@ -150,13 +160,7 @@ function Dashboard() {
           color: "#F5F5F5"
         }}
       >
-        <h1
-          style={{
-            marginBottom: "25px"
-          }}
-        >
-          Inventory Dashboard
-        </h1>
+        <h1>Inventory Dashboard</h1>
 
         <button
           onClick={downloadReport}
@@ -173,8 +177,6 @@ function Dashboard() {
           Download Inventory Report
         </button>
 
-        {/* KPI CARDS */}
-
         <div
           style={{
             display: "grid",
@@ -184,163 +186,67 @@ function Dashboard() {
             marginBottom: "30px"
           }}
         >
-          <div
-            style={{
-              background: "#161616",
-              border: "1px solid #262626",
-              borderRadius: "16px",
-              padding: "25px"
-            }}
-          >
+          <div className="card">
             <h4>Total Products</h4>
             <h2>{analytics.total_products}</h2>
           </div>
 
-          <div
-            style={{
-              background: "#161616",
-              border: "1px solid #262626",
-              borderRadius: "16px",
-              padding: "25px"
-            }}
-          >
+          <div className="card">
             <h4>Transactions</h4>
             <h2>{analytics.transaction_count}</h2>
           </div>
 
-          <div
-            style={{
-              background: "#161616",
-              border: "1px solid #262626",
-              borderRadius: "16px",
-              padding: "25px"
-            }}
-          >
+          <div className="card">
             <h4>Low Stock</h4>
-
-            <h2
-              style={{
-                color: "#DC2626"
-              }}
-            >
+            <h2 style={{ color: "#DC2626" }}>
               {analytics.low_stock_count}
             </h2>
           </div>
 
-          <div
-            style={{
-              background: "#161616",
-              border: "1px solid #262626",
-              borderRadius: "16px",
-              padding: "25px"
-            }}
-          >
+          <div className="card">
             <h4>Inventory Value</h4>
-
-            <h2>
-              ₹{analytics.inventory_value}
-            </h2>
+            <h2>₹{analytics.inventory_value}</h2>
           </div>
         </div>
-
-        {/* CHARTS */}
 
         <div
           style={{
             display: "grid",
-            gridTemplateColumns:
-              "1fr 1fr",
+            gridTemplateColumns: "1fr 1fr",
             gap: "25px",
             marginBottom: "40px"
           }}
         >
-          <div
-            style={{
-              background: "#161616",
-              border: "1px solid #262626",
-              borderRadius: "16px",
-              padding: "20px"
-            }}
-          >
-            <h3
-              style={{
-                marginBottom: "20px"
-              }}
-            >
-              Inventory Stock Levels
-            </h3>
-
+          <div className="card">
+            <h3>Inventory Stock Levels</h3>
             <Bar data={stockChartData} />
           </div>
 
-          <div
-            style={{
-              background: "#161616",
-              border: "1px solid #262626",
-              borderRadius: "16px",
-              padding: "20px"
-            }}
-          >
-            <h3
-              style={{
-                marginBottom: "20px"
-              }}
-            >
-              Inventory Overview
-            </h3>
-
+          <div className="card">
+            <h3>Inventory Overview</h3>
             <Pie data={pieChartData} />
           </div>
         </div>
 
-        {/* LOW STOCK */}
-
-        <div
-          style={{
-            background: "#161616",
-            border: "1px solid #262626",
-            borderRadius: "16px",
-            padding: "20px",
-            marginBottom: "30px"
-          }}
-        >
+        <div className="card">
           <h2>Low Stock Alerts</h2>
 
           {data.low_stock.length === 0 ? (
             <p>No low stock products</p>
           ) : (
-            data.low_stock.map(
-              (product) => (
-                <p
-                  key={product.id}
-                  style={{
-                    color: "#DC2626"
-                  }}
-                >
-                  {product.name} ({product.quantity})
-                </p>
-              )
-            )
+            data.low_stock.map((product) => (
+              <p
+                key={product.id}
+                style={{ color: "#DC2626" }}
+              >
+                {product.name} ({product.quantity})
+              </p>
+            ))
           )}
         </div>
 
-        {/* RECENT TRANSACTIONS */}
-
-        <div
-          style={{
-            background: "#161616",
-            border: "1px solid #262626",
-            borderRadius: "16px",
-            padding: "20px"
-          }}
-        >
-          <h2
-            style={{
-              marginBottom: "20px"
-            }}
-          >
-            Recent Transactions
-          </h2>
+        <div className="card">
+          <h2>Recent Transactions</h2>
 
           <table
             style={{
@@ -364,7 +270,9 @@ function Dashboard() {
                   <tr key={transaction.id}>
                     <td>{transaction.id}</td>
                     <td>{transaction.product_id}</td>
-                    <td>{transaction.transaction_type}</td>
+                    <td>
+                      {transaction.transaction_type}
+                    </td>
                     <td>{transaction.quantity}</td>
                     <td>{transaction.created_at}</td>
                   </tr>
