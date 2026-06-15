@@ -6,12 +6,12 @@ genai.configure(
     api_key=Config.GEMINI_API_KEY
 )
 
-model = genai.GenerativeModel(
-    "gemini-1.5-flash-latest"
-)
-
 
 def ask_gemini(question):
+
+    model = genai.GenerativeModel(
+        "gemini-2.0-flash"
+    )
 
     response = model.generate_content(
         question
