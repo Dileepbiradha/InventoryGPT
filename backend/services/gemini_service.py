@@ -1,4 +1,5 @@
 import google.generativeai as genai
+
 from config import Config
 
 genai.configure(
@@ -6,24 +7,14 @@ genai.configure(
 )
 
 model = genai.GenerativeModel(
-    "gemini-2.0-flash"
+    "gemini-1.5-flash"
 )
 
-def ask_gemini(prompt):
 
-    try:
+def ask_gemini(question):
 
-        response = model.generate_content(
-            prompt
-        )
+    response = model.generate_content(
+        question
+    )
 
-        return response.text
-
-    except Exception as e:
-
-        return f"""
-LLM service temporarily unavailable.
-
-Gemini Error:
-{str(e)}
-"""
+    return response.text
