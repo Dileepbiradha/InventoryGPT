@@ -1,4 +1,4 @@
-
+from models.user import User
 
 from routes.product_routes import product_bp
 from routes.dashboard_routes import dashboard_bp
@@ -48,7 +48,23 @@ mail.init_app(app)
 
 with app.app_context():
     db.create_all()
-    
+
+@app.route("/debug-users")
+def debug_users():
+    users = User.query.all()
+
+    return {
+        "users": [
+            {
+                "id": u.id,
+                "email": u.email,
+                "username": u.username,
+                "password": u.password
+            }
+            for u in users
+        ]
+    }
+
 @app.route("/")
 def home():
     return {
