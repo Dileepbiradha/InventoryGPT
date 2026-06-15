@@ -12,11 +12,23 @@ ai_inventory_bp = Blueprint(
 
 @ai_inventory_bp.route(
     "/",
-    methods=["POST"]
+    methods=["GET", "POST"]
 )
 def ask_inventory_ai():
 
+    # TEST GET REQUEST
+    if request.method == "GET":
+        return jsonify({
+            "status": "AI route working"
+        })
+
+    # POST REQUEST
     data = request.get_json()
+
+    if not data:
+        return jsonify({
+            "error": "No JSON data received"
+        }), 400
 
     question = data.get(
         "question",
