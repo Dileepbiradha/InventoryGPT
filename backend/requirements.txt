@@ -21,7 +21,5 @@ gunicorn
 google-generativeai
 Flask-JWT-Extended
 Flask-Mail
-chromadb
-sentence-transformers
 bcrypt
 reportlab

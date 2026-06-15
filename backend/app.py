@@ -100,10 +100,10 @@ app.register_blueprint(
     auth_bp,
     url_prefix="/api/auth"
 )
-app.register_blueprint(
-    inventory_bp,
-    url_prefix="/api/inventory"
-)
+# app.register_blueprint(
+#     ai_inventory_bp,
+#     url_prefix="/api/ai-inventory"
+# )
 
 if __name__ == "__main__":
     app.run(debug=True)
