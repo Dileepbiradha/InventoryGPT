@@ -168,12 +168,8 @@ function App() {
         {/* AI CHAT */}
 
         <Route
-          path="/ai-chat"
-          element={
-            <ProtectedRoute>
-              <AIChat />
-            </ProtectedRoute>
-          }
+          path="/ai"
+          element={<AIChat />}
         />
 
         {/* SALES ORDERS */}

@@ -83,12 +83,12 @@ function Dashboard() {
     }
   };
 
-  const downloadReport = () => {
-    window.open(
-      "https://inventorygpt.onrender.com/api/reports/inventory",
-      "_blank"
-    );
-  };
+    const downloadReport = () => {
+      window.open(
+        "https://inventorygpt.onrender.com/api/reports/inventory",
+        "_blank"
+      );
+    };
 
   if (!data || !analytics) {
     return (

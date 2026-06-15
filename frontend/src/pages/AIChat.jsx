@@ -3,47 +3,32 @@ import api from "../services/api";
 import Navbar from "../components/Navbar";
 
 function AIChat() {
-
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const askAI = async () => {
+    if (!question.trim()) return;
 
     try {
-
-      console.log("Sending question:", question);
+      setLoading(true);
 
       const response = await api.post(
-        "/ai-inventory",
+        "/ai-inventory/",
         {
           question
         }
       );
 
-      console.log("AI Response:", response.data);
+      setAnswer(response.data.answer);
+    } catch (error) {
+      console.error(error);
 
       setAnswer(
-        response.data.answer
+        "Error contacting AI assistant."
       );
-
-    } catch (error) {
-
-      console.error("AI Error:", error);
-
-      if (error.response) {
-
-        setAnswer(
-          error.response.data.error ||
-          error.response.data.answer ||
-          "Backend returned an error"
-        );
-
-      } else {
-
-        setAnswer(
-          "Cannot connect to backend server"
-        );
-      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -51,52 +36,71 @@ function AIChat() {
     <>
       <Navbar />
 
-      <div style={{ padding: "30px" }}>
+      <div
+        style={{
+          padding: "30px",
+          color: "white",
+          background: "#0A0A0A",
+          minHeight: "100vh"
+        }}
+      >
+        <h1>AI Inventory Assistant</h1>
 
-        <h1>Inventory AI Assistant</h1>
-
-        <input
-          type="text"
-          placeholder="Ask a question..."
+        <textarea
           value={question}
           onChange={(e) =>
             setQuestion(e.target.value)
           }
+          placeholder="Ask something about inventory..."
           style={{
-            width: "500px",
-            padding: "10px"
+            width: "100%",
+            height: "120px",
+            padding: "10px",
+            marginTop: "20px",
+            marginBottom: "20px"
           }}
         />
 
         <button
           onClick={askAI}
           style={{
-            marginLeft: "10px",
-            padding: "10px"
+            background: "#2563EB",
+            color: "white",
+            border: "none",
+            padding: "12px 20px",
+            borderRadius: "8px",
+            cursor: "pointer"
           }}
         >
-          Ask
+          Ask AI
         </button>
 
-        <div
-          style={{
-            marginTop: "30px",
-            border: "1px solid gray",
-            padding: "20px"
-          }}
-        >
-          <strong>Answer:</strong>
-          <pre
-            style={{
-            whiteSpace: "pre-wrap",
-            wordBreak: "break-word",
-            fontFamily: "inherit"
-          }}
-        >
-          {answer}
-        </pre>
-        </div>
+        {loading && (
+          <p style={{ marginTop: "20px" }}>
+            Thinking...
+          </p>
+        )}
 
+        {answer && (
+          <div
+            style={{
+              marginTop: "30px",
+              background: "#161616",
+              padding: "20px",
+              borderRadius: "10px"
+            }}
+          >
+            <h3>Answer</h3>
+
+            <p
+              style={{
+                whiteSpace: "pre-wrap"
+              }}
+            >
+              {answer}
+            </p>
+          </div>
+        )}
       </div>
     </>
   );

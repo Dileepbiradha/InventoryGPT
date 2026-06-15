@@ -62,7 +62,7 @@ function Navbar() {
         <Link to="/sales-orders" style={linkStyle}>Sales Orders</Link>
         <Link to="/analytics" style={linkStyle}>Analytics</Link>
         <Link to="/low-stock" style={linkStyle}>Low Stock</Link>
-        <Link to="/ai-chat" style={linkStyle}>AI Assistant</Link>
+        <Link to="/ai" style={linkStyle}>AI Assistant</Link>
 
         <button onClick={handleLogout}
           style={{
