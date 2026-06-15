@@ -1,5 +1,5 @@
 from models.user import User
-
+from routes.report_routes import reports_bp
 from routes.product_routes import product_bp
 from routes.dashboard_routes import dashboard_bp
 from routes.analytics_routes import analytics_bp
@@ -31,13 +31,20 @@ CORS(
     app,
     resources={
         r"/api/*": {
-            "origins": [
-                "http://localhost:5173",
-                "http://127.0.0.1:5173"
-            ]
+            "origins": "*"
         }
     },
-    supports_credentials=True
+    allow_headers=[
+        "Content-Type",
+        "Authorization"
+    ],
+    methods=[
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "OPTIONS"
+    ]
 )
 
 
@@ -126,6 +133,12 @@ app.register_blueprint(
     inventory_bp,
     url_prefix="/api/inventory"
 )
+
+app.register_blueprint(
+    reports_bp,
+    url_prefix="/api/reports"
+)
+
 
 
 #app.register_blueprint(
