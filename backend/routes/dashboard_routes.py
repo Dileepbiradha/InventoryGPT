@@ -10,7 +10,7 @@ dashboard_bp = Blueprint(
 )
 
 
-@dashboard_bp.route("", methods=["GET"])
+@dashboard_bp.route("/", methods=["GET"])
 def dashboard():
 
     products = Product.query.all()
