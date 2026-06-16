@@ -4,11 +4,12 @@ function Navbar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
 
-  window.location.href = "/login";
-};
+    // Redirect to login page/home page
+    navigate("/");
+  };
 
   const linkStyle = {
     color: "#F5F5F5",
@@ -51,7 +52,7 @@ function Navbar() {
           alignItems: "center"
         }}
       >
-        <Link to="/home" style={{ marginRight: "20px"}}>Home</Link>
+        <Link to="/home" style={linkStyle}>Home</Link>
         <Link to="/dashboard" style={linkStyle}>Dashboard</Link>
         <Link to="/products" style={linkStyle}>Products</Link>
         <Link to="/inventory" style={linkStyle}>Inventory</Link>
@@ -64,7 +65,8 @@ function Navbar() {
         <Link to="/low-stock" style={linkStyle}>Low Stock</Link>
         <Link to="/ai" style={linkStyle}>AI Assistant</Link>
 
-        <button onClick={handleLogout}
+        <button
+          onClick={handleLogout}
           style={{
             background: "#DC2626",
             color: "white",
