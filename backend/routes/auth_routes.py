@@ -1,3 +1,4 @@
+from backend import app
 from flask import Blueprint
 from flask import request
 from flask import jsonify
@@ -9,6 +10,15 @@ auth_bp = Blueprint(
     __name__
 )
 
+
+@app.route("/routes")
+def routes():
+
+    return {
+        "routes": sorted(
+            [str(rule) for rule in app.url_map.iter_rules()]
+        )
+    }
 
 @auth_bp.route("/login", methods=["POST"])
 def login():
