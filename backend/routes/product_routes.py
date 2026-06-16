@@ -60,27 +60,25 @@ def get_product(id):
 # ==========================================
 # CREATE PRODUCT
 # ==========================================
-@product_bp.route(
-    "/",
-    methods=["POST"]
-)
-@jwt_required()
+@product_bp.route("/", methods=["POST"])
 def create_product():
 
     data = request.get_json()
 
-    errors = validate_product(data)
+    product = Product(
+        name=data["name"],
+        sku=data["sku"],
+        quantity=data["quantity"],
+        price=data["price"],
+        supplier=data["supplier"]
+    )
 
-    if errors:
-        return jsonify({
-            "errors": errors
-        }), 400
+    db.session.add(product)
+    db.session.commit()
 
-    product = ProductService.create(data)
-
-    return jsonify(
-        product.to_dict()
-    ), 201
+    return jsonify({
+        "message": "Product created"
+    }), 201
 
 
 # ==========================================

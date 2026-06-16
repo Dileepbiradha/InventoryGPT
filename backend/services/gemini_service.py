@@ -16,8 +16,9 @@ def ask_gemini(question):
 
     products = Product.query.all()
 
-    inventory_data = ""
+    print("QUESTION:", question)
 
+    inventory_data = ""
     total_value = 0
 
     for product in products:
@@ -33,27 +34,34 @@ def ask_gemini(question):
         """
 
     prompt = f"""
-    You are an Inventory Management AI.
-
     Inventory Summary:
-
     Total Inventory Value: {total_value}
 
     Products:
-
     {inventory_data}
 
-    User Question:
-
+    Question:
     {question}
-
-    Answer using the inventory data above.
     """
 
-    print("========== PROMPT ==========")
-    print(prompt)
-    print("============================")
+    print("PROMPT LENGTH:", len(prompt))
 
-    response = model.generate_content(prompt)
+    try:
 
-    return response.text
+        response = model.generate_content(prompt)
+
+        print("SUCCESS")
+
+        return response.text
+
+    except Exception as e:
+
+        print("GEMINI ERROR:", str(e))
+
+        raise
+
+    except Exception as e:
+
+        print("GEMINI ERROR:", str(e))
+
+        return f"Gemini Error: {str(e)}"
