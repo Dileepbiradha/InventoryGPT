@@ -72,6 +72,16 @@ def debug_users():
         ]
     }
 
+
+@app.route("/routes")
+def routes():
+    return {
+        "routes": sorted(
+            [str(rule) for rule in app.url_map.iter_rules()]
+        )
+    }
+
+
 @app.route("/")
 def home():
     return {
