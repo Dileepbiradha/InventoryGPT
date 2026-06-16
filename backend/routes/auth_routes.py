@@ -10,33 +10,25 @@ auth_bp = Blueprint(
 )
 
 
-@auth_bp.route("/register", methods=["POST"])
-def register():
-
-    try:
-        data = request.get_json()
-
-        user = AuthService.register(data)
-
-        return jsonify(user), 201
-
-    except ValueError as e:
-        return jsonify({
-            "message": str(e)
-        }), 400
-
-
-@auth_bp.route(
-    "/login",
-    methods=["POST"]
-)
+@auth_bp.route("/login", methods=["POST"])
 def login():
 
-    data = request.get_json()
+    try:
 
-    result = AuthService.login(
-        data
-    )
+        data = request.get_json()
 
-    return jsonify(result)
+        result = AuthService.login(data)
 
+        return jsonify(result)
+
+    except ValueError as e:
+
+        return jsonify({
+            "message": str(e)
+        }), 401
+
+    except Exception as e:
+
+        return jsonify({
+            "message": str(e)
+        }), 500
