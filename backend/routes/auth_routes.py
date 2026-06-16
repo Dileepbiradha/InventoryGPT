@@ -10,6 +10,11 @@ auth_bp = Blueprint(
 )
 
 
+@auth_bp.route("/test")
+def test():
+    return {"message": "auth blueprint loaded"}
+
+
 @auth_bp.route("/register", methods=["POST"])
 def register():
 
