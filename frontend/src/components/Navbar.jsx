@@ -8,7 +8,7 @@ function Navbar() {
     localStorage.removeItem("user");
 
     // Redirect to login page/home page
-    navigate("/");
+    navigate("/login");
   };
 
   const linkStyle = {
