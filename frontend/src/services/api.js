@@ -1,19 +1,29 @@
 import axios from "axios";
 
-
-console.log("API URL:", import.meta.env.VITE_API_URL);
-console.log("Base URL:", api.defaults.baseURL);
 const api = axios.create({
   baseURL:
     import.meta.env.VITE_API_URL ||
-    "https://inventorygpt.onrender.com/api"
+    "https://inventorygpt-api.onrender.com/api"
 });
+
+console.log(
+  "API URL:",
+  import.meta.env.VITE_API_URL
+);
+
+console.log(
+  "Base URL:",
+  api.defaults.baseURL
+);
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+
+    const token =
+      localStorage.getItem("token");
 
     if (token) {
+
       config.headers.Authorization =
         `Bearer ${token}`;
     }
@@ -24,6 +34,7 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response) => response,
+
   (error) => {
 
     if (
@@ -31,9 +42,12 @@ api.interceptors.response.use(
       error.response.status === 401
     ) {
 
-      localStorage.removeItem("token");
+      localStorage.removeItem(
+        "token"
+      );
 
-      window.location.href = "/login";
+      window.location.href =
+        "/login";
     }
 
     return Promise.reject(error);

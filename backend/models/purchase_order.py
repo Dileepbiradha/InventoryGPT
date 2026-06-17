@@ -48,11 +48,23 @@ class PurchaseOrder(db.Model):
         return {
             "id": self.id,
             "product_id": self.product_id,
-            "product_name": self.product.name,
+
+            "product_name":
+                self.product.name
+                if self.product
+                else None,
+
             "quantity": self.quantity,
-            "product": self.product.to_dict() if self.product else None,
+
+            "product":
+                self.product.to_dict()
+                if self.product
+                else None,
+
             "supplier": self.supplier,
+
             "status": self.status,
+
             "created_at":
                 self.created_at.isoformat()
         }
