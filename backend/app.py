@@ -14,36 +14,27 @@ from routes.auth_routes import auth_bp
 from routes.inventory_routes import inventory_bp
 from flask import Flask
 from flask_cors import CORS
-
 from config import Config
-
-from extensions import (
-    db,
-    mail,
-    migrate,
-    jwt
-)
+from extensions import db, mail, migrate, jwt
 
 app = Flask(__name__)
-app.config.from_object(Config)
+app.config.from_object(Config)   # ← ADD THIS LINE
 
 CORS(
     app,
-    resources={
-        r"/*": {
-            "origins": [
-                "https://inventorygpt-1.onrender.com"
-            ]
-        }
-    },
-    supports_credentials=True
+    resources={r"/*": {"origins": [
+        "https://inventorygpt-1.onrender.com",
+        "http://localhost:5173"
+    ]}},
+    supports_credentials=True,
+    allow_headers=["Content-Type", "Authorization"],
+    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"]
 )
 
 db.init_app(app)
 migrate.init_app(app, db)
 jwt.init_app(app)
 mail.init_app(app)
-
 with app.app_context():
     db.create_all()
 

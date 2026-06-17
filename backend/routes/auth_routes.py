@@ -34,6 +34,7 @@ def register():
 
 
 @auth_bp.route("/login", methods=["POST"])
+
 def login():
 
     try:
