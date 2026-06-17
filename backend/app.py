@@ -30,23 +30,14 @@ app.config.from_object(Config)
 CORS(
     app,
     resources={
-        r"/api/*": {
-            "origins": "*"
+        r"/*": {
+            "origins": [
+                "https://inventorygpt-1.onrender.com"
+            ]
         }
     },
-    allow_headers=[
-        "Content-Type",
-        "Authorization"
-    ],
-    methods=[
-        "GET",
-        "POST",
-        "PUT",
-        "DELETE",
-        "OPTIONS"
-    ]
+    supports_credentials=True
 )
-
 
 db.init_app(app)
 migrate.init_app(app, db)
@@ -85,7 +76,8 @@ def routes():
 @app.route("/")
 def home():
     return {
-        "status": "running"
+        "status": "running",
+        "cors": "enabled"
     }
 
 app.register_blueprint(
