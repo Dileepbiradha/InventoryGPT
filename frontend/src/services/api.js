@@ -1,9 +1,7 @@
 import axios from "axios";
 
-const api = axios.create({
-  baseURL:
-    import.meta.env.VITE_API_URL ||
-    "https://inventorygpt-api.onrender.com/api"
+const API = axios.create({
+  baseURL: import.meta.env.VITE_API_URL, // e.g. https://inventorygpt-api.onrender.com
 });
 
 console.log(
